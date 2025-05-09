@@ -25,8 +25,8 @@ DECLARE
     );
 
     v_account_names t_account_name := t_account_name(
-        'Alice Martins', 'John Peters', 'Linda Gomez', 'Robert Blake', 'Nina Carter',
-        'Brian Storm', 'Sophie Lane', 'Rajiv Menon', 'Chen Wang', 'Fatima Noor'
+        'Alice Martins', 'John Peters', 'Linda Gomez', 'Robert Blake', 'James Junior',
+        'Gabriel King', 'Otunla Otunba', 'Maxwell Maxwell', 'Adekunle Waziri', 'Damilola Taiwo'
     );
 
     v_balances t_balance := t_balance(
