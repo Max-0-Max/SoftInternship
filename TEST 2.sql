@@ -175,17 +175,17 @@ EXCEPTION
 END;
 /
 
---call procedure
+--call procedure to transfer funds from one account to another
 BEGIN
     transfer_funds('ACC001', 'ACC002', 500);
 END;
 
---call functiom
+--call function to get account summary
 SELECT get_account_summary('ACC002') FROM dual;
 
---call procdure
+--call procedure for exception handing
 BEGIN
-  WITHDRAW('ACC001', 500);
+  WITHDRAW('ACC001', 50000);
 END;
 
 
