@@ -175,15 +175,26 @@ EXCEPTION
 END;
 /
 
+<<<<<<< HEAD:TEST 2.sql
 --call procedure to transfer funds from one account to another
+=======
+--call procedure to transfer funds from one account to another.
+>>>>>>> 949ea0c (Resolved merge conflicts and completed merge):PLSQL Internship Test  Banking System Scenario.sql
 BEGIN
     transfer_funds('ACC001', 'ACC002', 500);
 END;
 
+<<<<<<< HEAD:TEST 2.sql
 --call function to get account summary
 SELECT get_account_summary('ACC002') FROM dual;
 
 --call procedure for exception handing
+=======
+--call functiom to get account summary
+SELECT get_account_summary('ACC002') FROM dual;
+
+--call procedure for exception handling
+>>>>>>> 949ea0c (Resolved merge conflicts and completed merge):PLSQL Internship Test  Banking System Scenario.sql
 BEGIN
   WITHDRAW('ACC001', 50000);
 END;
