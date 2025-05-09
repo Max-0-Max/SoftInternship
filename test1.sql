@@ -7,7 +7,7 @@ CREATE TABLE app_token(
     expiry_date DATE
 );
 
---task 2: Insert Sample Tokens
+--task 2: Insert Sample Tokens          
 INSERT INTO app_token(system_id, system_name, token, expiry_date)
 VALUES (token_seq.NEXTVAL, 'System A', 'TOKEN123A', SYSDATE + 3);
 
@@ -77,3 +77,14 @@ BEGIN
 END;
 
 SELECT * FROM app_token;
+
+--task 6: Create a Trigger for Auto Expiry Cleanup
+CREATE OR REPLACE TRIGGER trg_expired_tokens
+AFTER INSERT ON app_token  
+FOR EACH ROW
+BEGIN
+    IF :NEW.expiry_date < SYSDATE THEN
+        DELETE FROM app_token WHERE system_id = :NEW.system_id;
+    END IF;
+END;
+--task 7: Test the Trigger  
