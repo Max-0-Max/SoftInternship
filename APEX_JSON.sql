@@ -5,7 +5,7 @@ CREATE TABLE trx_log (
     log_time DATE DEFAULT SYSDATE
 );
 
--- Procedure to create multiple bank accounts from a JSON input
+-- 7. Procedure to create multiple bank accounts from a JSON input
 CREATE OR REPLACE PROCEDURE create_accounts_from_json(p_json IN CLOB) IS
     l_count NUMBER;  -- Variable to hold the number of account objects in the JSON array
 BEGIN
@@ -34,7 +34,7 @@ CREATE TABLE bank_account(
 
 
 
--- Function to return all bank account records in JSON format (as a CLOB)
+-- 8. Function to return all bank account records in JSON format (as a CLOB)
 CREATE OR REPLACE FUNCTION get_all_accounts_json RETURN CLOB IS
     l_json CLOB;  
 BEGIN
@@ -55,7 +55,6 @@ BEGIN
         APEX_JSON.write('account_name', rec.account_name);     
         APEX_JSON.write('balance', rec.balance);               
 
-        -- Close the JSON object for the current account
         APEX_JSON.close_object;
     END LOOP;
  
@@ -69,7 +68,7 @@ BEGIN
 END;
 
 
--- Procedure to log transaction IDs from JSON input into the trx_log table
+-- 9. Procedure to log transaction IDs from JSON input into the trx_log table
 CREATE OR REPLACE PROCEDURE log_json_transaction(p_json IN CLOB) IS
     v_trx_inserted       VARCHAR2(4000);  
     v_trx_not_inserted   VARCHAR2(4000);  
@@ -104,5 +103,51 @@ BEGIN
 
     COMMIT;
 END;
+
+
+--declare each procedure
+DECLARE
+    l_json CLOB := '[
+        {
+            "account_number": "Acc011",
+            "account_name": "Habeeb",
+            "balance": 5000
+        },
+        {
+            "account_number": "ACC012,
+            "account_name": "Peter Dero",
+            "balance": 2500
+        }
+    ]';
+BEGIN
+    create_accounts_from_json(p_json => l_json);
+END;
+/
+
+--declare function
+DECLARE
+    l_result CLOB;
+BEGIN
+    l_result := get_all_accounts_json;
+    DBMS_OUTPUT.put_line(l_result);
+END;
+/
+
+--call procedure
+DECLARE
+    l_json CLOB := '{
+      "ResponseCode": 200,
+      "Message": "Success",
+      "TotalRows": 10,
+      "RowsInserted": 6,
+      "TrxInserted": "1311894,1311827,1309233,1309571,1312002,1310298",
+      "RowsNotInserted": 4,
+      "TrxNotInserted": "1312249,1312566,1311693,1312610"
+    }';
+BEGIN
+    log_json_transaction(p_json => l_json);
+END;
+/
+
 
 
